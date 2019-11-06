@@ -7,26 +7,25 @@
 // Author: Ryan Cheng <ryachen@nuevaschool.org>
 //
 // See LICENSE for details
-
 "use strict";
 
 const Tp = require("thingpedia");
 const { createTpEntity } = require("./utils");
 
-const SOCCER_EU_SCHEDULE_URL =
-    "https://api.sportradar.us/soccer-t3/eu/en/schedules/%s/schedule.json?api_key=%s";
-const SOCCER_EU_LIVE_URL =
-    "https://api.sportradar.us/soccer-t3/eu/en/schedules/live/results.json?api_key=%s";
-const SOCCER_EU_CLOSED_URL =
-    "https://api.sportradar.us/soccer-t3/eu/en/schedules/%s/results.json?api_key=%s";
-const SOCCER_EU_TOURNAMENT_RANKINGS =
-    "https://api.sportradar.us/soccer-t3/eu/en/tournaments/%s/standings.json?api_key=%s";
+const SOCCER_AM_SCHEDULE_URL =
+    "https://api.sportradar.us/soccer-t3/am/en/schedules/%s/schedule.json?api_key=%s";
+const SOCCER_AM_LIVE_URL =
+    "https://api.sportradar.us/soccer-t3/am/en/schedules/live/results.json?api_key=%s";
+const SOCCER_AM_CLOSED_URL =
+    "https://api.sportradar.us/soccer-t3/am/en/schedules/%s/results.json?api_key=%s";
+const SOCCER_AM_TOURNAMENT_RANKINGS =
+    "https://api.sportradar.us/soccer-t3/am/en/tournaments/%s/standings.json?api_key=%s";
 
-module.exports = class SoccerEUSportRadarAPIDevice {
+module.exports = class SoccerAMSportRadarAPIDevice {
     constructor(platform, key) {
         this.platform = platform;
-        this.name = "Sport Radar EU Soccer Channel";
-        this.description = "The EU Soccer Channel for Sport Radar";
+        this.name = "Sport Radar America Soccer Channel";
+        this.description = "The America Soccer Channel for Sport Radar";
         this._api_key = key;
     }
 
@@ -40,7 +39,8 @@ module.exports = class SoccerEUSportRadarAPIDevice {
 
         const leagueId = league.value;
 
-        const url = SOCCER_EU_SCHEDULE_URL.format(formattedDate, this._api_key);
+        const url = SOCCER_AM_SCHEDULE_URL.format(formattedDate, this
+            ._api_key);
         return Tp.Helpers.Http.get(url).then((response) => {
             const parsed = JSON.parse(response);
             return parsed.sport_events
@@ -65,7 +65,7 @@ module.exports = class SoccerEUSportRadarAPIDevice {
     }
 
     _get_live_results(teamId) {
-        return Tp.Helpers.Http.get(SOCCER_EU_LIVE_URL).then((response) => {
+        return Tp.Helpers.Http.get(SOCCER_AM_LIVE_URL).then((response) => {
             const parsed = JSON.parse(response);
             const games = parsed.results;
             let index;
@@ -108,7 +108,7 @@ module.exports = class SoccerEUSportRadarAPIDevice {
     }
 
     _get_closed_results(teamId, formattedDate) {
-        const url = SOCCER_EU_CLOSED_URL.format(formattedDate, this._api_key);
+        const url = SOCCER_AM_CLOSED_URL.format(formattedDate, this._api_key);
         return Tp.Helpers.Http.get(url).then((response) => {
             const parsed = JSON.parse(response);
             const games = parsed.results;
@@ -161,7 +161,7 @@ module.exports = class SoccerEUSportRadarAPIDevice {
 
         const leagueId = league.value;
 
-        const url = SOCCER_EU_SCHEDULE_URL.format(formattedDate, this._api_key);
+        const url = SOCCER_AM_SCHEDULE_URL.format(formattedDate, this._api_key);
 
         return Tp.Helpers.Http.get(url).then((response) => {
             const parsed = JSON.parse(response);
@@ -189,7 +189,7 @@ module.exports = class SoccerEUSportRadarAPIDevice {
     get_league_rankings(league) {
 
         return Tp.Helpers.Http.get(
-            SOCCER_EU_TOURNAMENT_RANKINGS.format(league.value, this._api_key)
+            SOCCER_AM_TOURNAMENT_RANKINGS.format(league.value, this._api_key)
         ).then((response) => {
             const complete_standings = [];
             const parsed = JSON.parse(response);
