@@ -137,7 +137,7 @@ module.exports = class TuneinRadioDevice extends Tp.BaseDevice {
     }
 
     async get_local_stations() {
-        if (this.platform == 'cloud') {
+        if (this.platform === 'cloud') {
             throw new Error(DEVICE_ERROR.unsupported_version);
         } else {
             const query_string = {

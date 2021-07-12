@@ -76,7 +76,7 @@ class @com.tunein
   #_[canonical=["radio station", "radio channel", "radio show"]]
   #_[canonical_short=["radio"]]
   #_[on_error={
-    station_not_found=["radio station not found"],
+    station_not_found=["radio station not found"]
   }]
   #[minimal_projection=["id"]]
   #_[formatted=[{
